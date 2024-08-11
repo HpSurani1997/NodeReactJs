@@ -1,4 +1,4 @@
-const Constants = require('./Constants');
+const Constants = require('../config/Constants');
 let nodemailer = require('nodemailer');
 
 function sendMail(mailData) {

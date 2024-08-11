@@ -33,6 +33,11 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.user = require("./UserModel.js")(sequelize, Sequelize);
+db.profile = require('./ProfileModel.js')(sequelize, Sequelize);
 db.contactUs = require("./ContactUsModel.js")(sequelize, Sequelize);
+
+
+db.profile.belongsTo(db.user, { as: 'user', foreignKey: 'userId' });
+db.user.hasOne(db.profile, { as: 'profile', foreignKey: 'userId' });
 
 module.exports = db;

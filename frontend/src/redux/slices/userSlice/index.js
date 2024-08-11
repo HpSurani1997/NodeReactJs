@@ -17,6 +17,18 @@ export const userLogout = createAsyncThunk(
   }
 );
 
+
+export const getUserProfileData = createAsyncThunk(
+  "user/getUserProfileData",
+  async (options, { rejectWithValue }) => {
+    try {
+      return await api.getUserProfileData(options.header);
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
 export const loginWithEmail = createAsyncThunk(
   "user/login",
   async (options, { rejectWithValue }) => {
@@ -162,6 +174,18 @@ const userSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(userLogout.rejected, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(getUserProfileData.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getUserProfileData.fulfilled, (state, action) => {
+      state.user = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(getUserProfileData.rejected, (state) => {
+      state.user = {};
+      state.isLoggedIn = false;
       state.loading = false;
     });
   },

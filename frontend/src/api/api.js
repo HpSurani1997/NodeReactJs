@@ -3,13 +3,13 @@ import axios from "axios";
 const API_END_POINT = {
   LOGIN: "user/login",
   REGISTER: "user/register",
-  UPADTE_PROFILE: "user/updateProfile",
   VERIFY_OTP: "user/verifyOtp",
   FORGOT_PASSWORD: "user/forgotPassword",
   VERIFY_EMAIL: "user/verify-email",
   CHANGE_PASSWORD: "user/createNewPassword",
-  CONTACT_US: "user/contactUs",
-  
+  UPADTE_PROFILE: "profile/updateProfile",
+  GET_PROFILE: "profile/getProfile",
+  CONTACT_US: "profile/contactUs",
 };
 
 export const login = async (email, password) => {
@@ -21,13 +21,15 @@ export const login = async (email, password) => {
 };
 
 export const contactUsSubmit = async (name, email, queries, header) => {
-  return _baseRequest(API_END_POINT.CONTACT_US, "POST", { name, email, queries }, header).then(
-    (loginResponse) => {
-      return loginResponse;
-    }
-  );
+  return _baseRequest(
+    API_END_POINT.CONTACT_US,
+    "POST",
+    { name, email, queries },
+    header
+  ).then((loginResponse) => {
+    return loginResponse;
+  });
 };
-
 
 export const verifyEmailWithToken = async (email, token) => {
   return _baseRequest(
@@ -36,6 +38,14 @@ export const verifyEmailWithToken = async (email, token) => {
   ).then((loginResponse) => {
     return loginResponse;
   });
+};
+
+export const getUserProfileData = async (header) => {
+  return _baseRequest(API_END_POINT.GET_PROFILE, "GET", undefined, header).then(
+    (loginResponse) => {
+      return loginResponse;
+    }
+  );
 };
 
 export const changeUserPassword = async (

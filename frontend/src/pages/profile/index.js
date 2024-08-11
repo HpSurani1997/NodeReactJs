@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Form,
   Button,
@@ -10,7 +10,11 @@ import {
 } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { updateProfile, userLogout } from "../../redux/slices/userSlice";
+import {
+  getUserProfileData,
+  updateProfile,
+  userLogout,
+} from "../../redux/slices/userSlice";
 import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
@@ -29,7 +33,25 @@ const Profile = () => {
   const [newEmail, setNewEmail] = useState(email);
   const [newProfilePicture, setNewProfilePicture] = useState(profilePicture);
   const [profilePicFile, setProfilePicFile] = useState(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    getProfileData();
+  }, []);
+
+  const getProfileData = () => {
+    dispatch(
+      getUserProfileData({
+        header: {
+          "Content-Type": "application/json",
+          "x-access-token": user.token,
+        },
+      })
+    )
+      .unwrap()
+      .then(() => {})
+      .catch((err) => {});
+  };
 
   const handleLogout = () => {
     dispatch(userLogout({}))
@@ -64,8 +86,8 @@ const Profile = () => {
   };
 
   const handleContactUs = () => {
-    navigate('/contact-us')
-  }
+    navigate("/contact-us");
+  };
 
   const handleCancel = () => {
     setEditing(false);

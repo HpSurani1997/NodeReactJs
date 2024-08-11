@@ -14,12 +14,13 @@ app.use(express.static('api/uploads')); 
 
 app.get("/", (req, res) => {
   console.log('Application is running', new Date());
-  res.json({ message: "Welcome to VaoXpod application." });
+  res.json({ message: "Welcome to Upwork Test application." });
 });
 db.sequelize.sync().then(() => {
   console.log("Drop and re-sync db.");
 });
 require("./api/routes/UserRoute.js")(app);
+require("./api/routes/ProfileRoute.js")(app);
 const server = app.listen(process.env.PORT || 8000, () => {
   const port = server.address().port;
   console.log(`Server is working on port ${port} ${JSON.stringify(server.address())}`);

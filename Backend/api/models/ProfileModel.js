@@ -1,34 +1,24 @@
 'use strict';
 
 module.exports = function (sequelize, DataTypes) {
-    const UserModel = sequelize.define('UserModel', {
-        name: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        email: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        password: {
+    const ProfileModel = sequelize.define('ProfileModel', {
+        profile_pic_hash: {
             type: DataTypes.STRING,
             allowNull: true,
             defaultValue: null
         },
-        otp: {
+        profile_pic_ext: {
             type: DataTypes.STRING,
             allowNull: true,
             defaultValue: null
         },
-        verification_token: {
-            type: DataTypes.STRING,
-            allowNull: true,
-            defaultValue: null
-        },
-        status: {
-            type: DataTypes.ENUM('active', 'pending', 'suspended', 'cancelled'),
+        userId: {
+            type: DataTypes.INTEGER,
             allowNull: false,
-            defaultValue: 'active'
+            references: {
+                model: 'users', // The name of the User table in your database
+                key: 'id'
+            }
         },
         createdAt: {
             field: 'created_at',
@@ -43,8 +33,16 @@ module.exports = function (sequelize, DataTypes) {
             defaultValue: DataTypes.NOW
         },
     }, {
-        tableName: 'users'
+        tableName: 'profiles'
     });
 
-    return UserModel;
+    // Set up the association
+    ProfileModel.associate = function (models) {
+        ProfileModel.belongsTo(models.UserModel, {
+            foreignKey: 'userId',
+            as: 'user'
+        });
+    };
+
+    return ProfileModel;
 };

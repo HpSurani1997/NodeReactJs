@@ -5,7 +5,7 @@ module.exports =  Constants.is_local ? {
     port: '3306',
     USER: "username",
     PASSWORD: 'password',
-    DB: "testUpwork",
+    DB: "test",
     logging :false,
     dialect: "mysql",
     pool: {
@@ -17,9 +17,9 @@ module.exports =  Constants.is_local ? {
 } : {
     HOST: 'db4free.net',
     port: '3306',
-    USER: "vaoxpod_hiren",
-    PASSWORD: 'vaoxpod_hiren',
-    DB: "vaoxpod_hiren",
+    USER: "USER",
+    PASSWORD: 'PASSWORD',
+    DB: "testUpwork",
     logging :false,
     dialect: "mysql",
     pool: {
